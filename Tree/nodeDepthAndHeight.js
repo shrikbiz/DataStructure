@@ -101,49 +101,21 @@ class BST {
     console.log(this.root);
   }
 
-  preOrder() {
-    let arr = [];
-    this.traversePreOrder(this.root, arr);
-    console.log(arr);
+  depth() {
+    let count = 0;
+    this.depthCheck(this.root, count);
+    return count;
   }
 
-  traversePreOrder(parent, arr) {
+  depthCheck(parent, count) {
     if (!parent) return;
-    arr.push(parent.value);
-    this.traversePreOrder(parent.left, arr);
-    this.traversePreOrder(parent.right, arr);
-  }
-
-  inOrder() {
-    let arr = [];
-    this.traverseInOrder(this.root, arr);
-    return arr;
-  }
-
-  traverseInOrder(parent, arr) {
-    if (!parent) return;
-    this.traverseInOrder(parent.left, arr);
-    arr.push(parent.value);
-    this.traverseInOrder(parent.right, arr);
-  }
-
-  postOrder() {
-    let arr = [];
-    this.traversePostOrder(this.root, arr);
-    return arr;
-  }
-
-  traversePostOrder(parent, arr) {
-    if (!parent) return;
-    this.traversePostOrder(parent.left, arr);
-    // if (parent?.left?.value) console.log(parent.left.value);
-    this.traversePostOrder(parent.right, arr);
-    // if (parent?.right?.value) console.log(parent.right.value);
-    arr.push(parent.value);
+    this.depthCheck(parent.left, count);
+    this.depthCheck(parent.right, count);
+    count++;
   }
 }
 
-//filling tree
+//testing
 
 arr = [10, 5, 15, 6, 1, 8, 12, 18, 17];
 let bst = new BST();
@@ -157,13 +129,4 @@ let runBst = (array) => {
 
 runBst(arr);
 
-console.log("pre-order", bst.preOrder());
-console.log("in-order", bst.inOrder());
-console.log("post-order", bst.postOrder());
-
-//traversing
-
-/**
- * breathFirstSearch
- *
- */
+console.log(bst.depth());
