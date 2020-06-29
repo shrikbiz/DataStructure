@@ -64,11 +64,11 @@ class BST {
   }
 
   height() {
-    return this.heightCheck(this.root) - 1;
+    return this.heightCheck(this.root);
   }
 
   heightCheck(parent) {
-    if (!parent) return 0;
+    if (!parent) return -1;
     return (
       1 +
       Math.max(this.heightCheck(parent.left), this.heightCheck(parent.right))
@@ -153,8 +153,8 @@ let runBst = (array, tree) => {
 
 runBst(arr, bst);
 runBst(arr2, bst2);
-console.log(bst, bst2);
+// console.log(bst, bst2);
 
-// console.log(bst.height());
+console.log("height:", bst2.height());
 // console.log(bst.minimum2());
-console.log(bst.isSimilar(bst2.check()));
+// console.log(bst.isSimilar(bst2.check()));
