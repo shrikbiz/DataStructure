@@ -98,20 +98,50 @@ class BST {
   }
 
   check() {
-    console.log(this.root);
+    let parent = this.root;
+    console.log(parent.left.left.left);
   }
 
   preOrder() {
     let arr = [];
     this.traversePreOrder(this.root, arr);
-    console.log(arr);
+    // console.log("pre-order:", arr);
+    return arr;
   }
 
   traversePreOrder(parent, arr) {
+    console.log("Initial ->", "parent:", parent ? parent.value : "null");
     if (!parent) return;
     arr.push(parent.value);
+    console.log(
+      "start ->",
+      " parent:",
+      parent.value,
+      " left:",
+      parent.left !== null ? parent.left.value : "null",
+      " right:",
+      parent.right !== null ? parent.right.value : "null"
+    );
     this.traversePreOrder(parent.left, arr);
+    console.log(
+      "middle ->",
+      "parent:",
+      parent.value,
+      " left:",
+      parent.left !== null ? parent.left.value : "null",
+      " right:",
+      parent.right !== null ? parent.right.value : "null"
+    );
     this.traversePreOrder(parent.right, arr);
+    console.log(
+      "end ->",
+      "parent:",
+      parent.value,
+      " left:",
+      parent.left !== null ? parent.left.value : "null",
+      " right:",
+      parent.right !== null ? parent.right.value : "null"
+    );
   }
 
   inOrder() {
@@ -136,9 +166,7 @@ class BST {
   traversePostOrder(parent, arr) {
     if (!parent) return;
     this.traversePostOrder(parent.left, arr);
-    // if (parent?.left?.value) console.log(parent.left.value);
     this.traversePostOrder(parent.right, arr);
-    // if (parent?.right?.value) console.log(parent.right.value);
     arr.push(parent.value);
   }
 }
@@ -156,14 +184,8 @@ let runBst = (array) => {
 };
 
 runBst(arr);
+bst.preOrder();
 
-console.log("pre-order", bst.preOrder());
-console.log("in-order", bst.inOrder());
-console.log("post-order", bst.postOrder());
-
-//traversing
-
-/**
- * breathFirstSearch
- *
- */
+// console.log("pre-order", bst.preOrder());
+// console.log("in-order", bst.inOrder());
+// console.log("post-order", bst.postOrder());
