@@ -32,11 +32,10 @@ class LinkedList {
         validator = true;
         kthNode = kthNode.next;
       }
-
       counter++;
       list = list.next;
     }
-    console.log(validator || key < 0 ? kthNode.value : "invalid input");
+    // console.log(validator || key < 0 ? kthNode.value : "invalid input");
     return validator ? kthNode.value : "invalid input";
   }
 
@@ -71,15 +70,15 @@ class Node {
 }
 
 let ll = new LinkedList();
-// ll.add(7);
-// ll.add(2);
-// ll.add(3);
-// ll.add(4);
-// ll.add(5);
-// ll.add(10);
-// // ll.empty();
-// ll.add(8);
-ll.getFromEnd(0);
+ll.add(7);
+ll.add(2);
+ll.add(3);
+ll.add(4);
+ll.add(5);
+ll.add(10);
+// ll.empty();
+ll.add(8);
+// ll.getFromEnd(0);
 ll.check();
 ll.reverseLoop();
 ll.check();
