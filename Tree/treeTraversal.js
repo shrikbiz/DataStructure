@@ -99,7 +99,7 @@ class BST {
 
   check() {
     let parent = this.root;
-    console.log(parent.left.left.left);
+    console.log(parent);
   }
 
   preOrder() {
@@ -110,38 +110,12 @@ class BST {
   }
 
   traversePreOrder(parent, arr) {
-    console.log("Initial ->", "parent:", parent ? parent.value : "null");
     if (!parent) return;
     arr.push(parent.value);
-    console.log(
-      "start ->",
-      " parent:",
-      parent.value,
-      " left:",
-      parent.left !== null ? parent.left.value : "null",
-      " right:",
-      parent.right !== null ? parent.right.value : "null"
-    );
+    console.log("start ->", " parent:::", parent.value);
     this.traversePreOrder(parent.left, arr);
-    console.log(
-      "middle ->",
-      "parent:",
-      parent.value,
-      " left:",
-      parent.left !== null ? parent.left.value : "null",
-      " right:",
-      parent.right !== null ? parent.right.value : "null"
-    );
+
     this.traversePreOrder(parent.right, arr);
-    console.log(
-      "end ->",
-      "parent:",
-      parent.value,
-      " left:",
-      parent.left !== null ? parent.left.value : "null",
-      " right:",
-      parent.right !== null ? parent.right.value : "null"
-    );
   }
 
   inOrder() {
@@ -184,8 +158,8 @@ let runBst = (array) => {
 };
 
 runBst(arr);
-bst.preOrder();
+// bst.preOrder();
 
-// console.log("pre-order", bst.preOrder());
+console.log("pre-order", bst.preOrder());
 // console.log("in-order", bst.inOrder());
 // console.log("post-order", bst.postOrder());

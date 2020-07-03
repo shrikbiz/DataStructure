@@ -21,43 +21,66 @@ class AVLTree {
       parent.right = this.insertValue(parent.right, value);
     }
 
+    this.setHeight(parent);
+
+    return this.treeBalancer(parent);
+  }
+
+  setHeight(parent) {
     parent.height =
       1 + Math.max(this.isChild(parent.left), this.isChild(parent.right));
-
-    parent = this.treeBalancer(parent);
-
-    return parent;
   }
 
   treeBalancer(parent) {
-    let newRoot;
-    let temp;
-
     if (this.isLeftHeavy(parent)) {
-      if (this.balanceFactor(parent.left) < 0) {
-        temp = parent.left;
-        parent.left = temp.right;
-        temp.right = null;
-        parent.left.left = temp;
-      }
-      newRoot = parent.left;
-      parent.left = newRoot.right;
-      newRoot.right = parent;
-      newRoot = this.heightBalancer(newRoot);
-      return newRoot;
+      parent = this.rotateRight(parent);
+      parent = this.heightBalancer(parent);
     } else if (this.isRightHeavy(parent)) {
-      if (this.balanceFactor(parent.right) > 0) {
-        temp = parent.right;
-        parent.right = temp.left;
-        temp.left = null;
-        parent.right.right = temp;
-      }
-      newRoot = parent.right;
-      parent.right = newRoot.left;
-      newRoot.left = parent;
-      newRoot = this.heightBalancer(newRoot);
-      return newRoot;
+      parent = this.rotateLeft(parent);
+      parent = this.heightBalancer(parent);
     }
+    return parent;
+  }
+
+  rotateRight(parent) {
+    if (this.balanceFactor(parent.left) < 0) {
+      parent.left = this.rotateLeft(parent.left);
+      // parent = this.leftRightRotate(parent);
+      //^ -> alternate rotation function that gives different but right answer
+    }
+    let newRoot = parent.left;
+    parent.left = newRoot.right;
+    newRoot.right = parent;
+    // this.setHeight(parent);  //comment this.heightBalancer
+    // this.setHeight(newRoot); // setHeight is another method to do set height
+    // setHeight have a bug. one of the leaf's height gets 1 //here it's 21
+    return newRoot;
+  }
+  rotateLeft(parent) {
+    if (this.balanceFactor(parent.right) > 0) {
+      parent.right = this.rotateRight(parent.right);
+      // parent = this.rightLeftRotate(parent);
+      //^ -> alternate rotation function that gives different but right answer
+    }
+    let newRoot = parent.right;
+    parent.right = newRoot.left;
+    newRoot.left = parent;
+    // this.setHeight(parent);
+    // this.setHeight(newRoot);
+    return newRoot;
+  }
+  rightLeftRotate(parent) {
+    let temp = parent.right;
+    parent.right = temp.left;
+    temp.left = null;
+    parent.right.right = temp;
+    return parent;
+  }
+  leftRightRotate(parent) {
+    let temp = parent.left;
+    parent.left = temp.right;
+    temp.right = null;
+    parent.left.left = temp;
     return parent;
   }
 
@@ -120,7 +143,7 @@ avl.insert(5);
 avl.insert(6);
 avl.insert(4);
 avl.insert(8);
-avl.insert(20);
+// avl.insert(20);
 avl.insert(1);
 avl.insert(22);
 avl.insert(21);
