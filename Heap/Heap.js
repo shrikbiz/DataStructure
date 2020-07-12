@@ -16,9 +16,9 @@ class Heap {
     }
   }
 
-  delete() {
+  remove() {
     let parent = 0;
-    console.log("Deleting:", this.heap[parent]);
+    let root = this.heap[parent];
     this.heap[parent] = this.heap[this.heap.length - 1];
     this.heap.pop();
     let child = this.leftRightChild(this.heap, parent);
@@ -30,6 +30,7 @@ class Heap {
       parent = child;
       child = this.leftRightChild(this.heap, parent);
     }
+    return root;
   }
 
   leftChild(parent) {
@@ -48,31 +49,33 @@ class Heap {
   }
 
   display() {
-    console.log("Heap:", this.heap);
+    console.log("Heap -> display -> this.heap", this.heap);
     return this.heap;
+  }
+  findKth(times) {
+    if (times < 1 || times > this.heap.length) {
+      console.log("Wrong parameter in .findKth()");
+      return;
+    }
+    for (let i = 0; i < times - 1; i++) {
+      this.remove();
+    }
+    console.log("Heap -> findKth -> Kth Largest Value", this.heap[0]);
+    return this.heap[0];
   }
 }
 
 let heap = new Heap();
 
-heap.add(25);
-heap.add(22);
-heap.add(21);
-heap.add(15);
-heap.add(11);
-heap.add(9);
+heap.add(5);
+heap.add(3);
 heap.add(8);
-heap.add(2);
+heap.add(4);
 heap.add(1);
-heap.add(19);
-
+heap.add(2);
+// heap.remove();
+heap.display();
+// heap.findKth(0);
 heap.display();
 
-heap.delete();
-heap.display();
-heap.delete();
-heap.display();
-heap.delete();
-heap.display();
-heap.add(20);
-heap.display();
+
