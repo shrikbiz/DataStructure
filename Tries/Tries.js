@@ -82,6 +82,35 @@ class Tries {
       this.check(root.children.get(str[i]), str, i + 1);
     else console.log(str[i], "at", i, "is not in trie");
   }
+
+  autoSuggest(value) {
+    if (value === null || value === undefined) return "illegal argument";
+    let root = this.root;
+    let words = [];
+    if (value === "") this.autoSuggestion(root, words, value);
+    for (let i = 0; i < value.length; i++) {
+      if (!root.children.has(value[i])) return [value];
+
+      root = root.children.get(value[i]);
+      if (i === value.length - 1) {
+        if (!root.isEnd) words.push(value);
+        this.autoSuggestion(root, words, value);
+      }
+    }
+    return words;
+  }
+
+  autoSuggestion(root, words, word) {
+    if (!root) return;
+
+    if (root.isEnd) {
+      words.push(word);
+    }
+
+    root.children.forEach((value, key) => {
+      this.autoSuggestion(value, words, word + key);
+    });
+  }
 }
 
 let tries = new Tries();
@@ -90,6 +119,6 @@ tries.insert("cat");
 tries.insert("shrikant");
 tries.insert("shri");
 tries.insert("shrik");
-tries.delete("shrikant");
-// console.log(tries);
 tries.checkStr("shrikant");
+let value = undefined;
+console.log(`auto suggest for ${value} is:`, tries.autoSuggest(value));
