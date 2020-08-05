@@ -43,38 +43,31 @@ class Graph {
 
   traversal(value) {
     if (!this.graph.has(value)) return;
-    let connection = [];
-    let visited = new Set(value);
-    this.graph.get(value).forEach((val) => connection.push(val));
-    this.bft(connection, this.graph, visited);
-    console.log("bft:", visited);
-    visited = new Set(value);
-    this.dft(connection, this.graph, visited);
-    console.log("dft:", visited);
+
+    let bftVisited = new Set(value);
+    this.bft(value, this.graph, bftVisited);
+
+    let dftVisited = new Set(value);
+    this.dft(value, this.graph, dftVisited);
+
+    console.log("bft:", bftVisited);
+    console.log("dft:", dftVisited);
   }
 
-  bft(connection, graph, visited) {
-    if (!connection.length) return;
-    connection.forEach((val) => visited.add(val));
-    for (let value of connection) {
-      let vertex = [];
-      graph
-        .get(value)
-        .forEach((val) => (!visited.has(val) ? vertex.push(val) : vertex));
-      this.bft(vertex, graph, visited);
-    }
+  bft(root, graph, visited) {
+    if (!graph.get(root).size) return;
+    graph.get(root).forEach((value) => visited.add(value));
+
+    graph.get(root).forEach((value) => {
+      this.bft(value, graph, visited);
+    });
   }
 
-  dft(connection, graph, visited) {
-    if (!connection.length) return;
-    for (let value of connection) {
-      visited.add(value);
-      let vertex = [];
-      graph
-        .get(value)
-        .forEach((val) => (!visited.has(val) ? vertex.push(val) : vertex));
-      this.bft(vertex, graph, visited);
-    }
+  dft(root, graph, visited) {
+    visited.add(root);
+    graph.get(root).forEach((value) => {
+      if (!visited.has(value)) this.dft(value, graph, visited);
+    });
   }
 }
 
@@ -94,4 +87,3 @@ graph.addEdges("C", "B");
 graph.addEdges("C", "D");
 graph.addEdges("D", "E");
 graph.traversal("C");
-// graph.print();
