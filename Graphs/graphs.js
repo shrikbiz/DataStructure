@@ -3,7 +3,7 @@ class Graph {
     this.graph = new Map();
   }
 
-  insert(value) {
+  addNode(value) {
     if (this.graph.has(value)) return console.log(`${value} already exists`);
     this.graph.set(value, new Set());
   }
@@ -25,7 +25,7 @@ class Graph {
     });
   }
 
-  remove(value) {
+  removeNode(value) {
     if (!this.graph.has(value)) {
       console.log(value, "does not exist in graph");
       return;
@@ -73,11 +73,11 @@ class Graph {
 
 let graph = new Graph();
 
-graph.insert("A");
-graph.insert("B");
-graph.insert("C");
-graph.insert("D");
-graph.insert("E");
+graph.addNode("A");
+graph.addNode("B");
+graph.addNode("C");
+graph.addNode("D");
+graph.addNode("E");
 
 graph.addEdges("A", "B");
 graph.addEdges("A", "E");
