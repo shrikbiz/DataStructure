@@ -3,7 +3,7 @@ class Graph {
     this.graph = new Map();
   }
 
-  insert(value) {
+  addNode(value) {
     if (this.graph.has(value)) return console.log(`${value} already exists`);
     this.graph.set(value, new Set());
   }
@@ -25,7 +25,7 @@ class Graph {
     });
   }
 
-  remove(value) {
+  removeNode(value) {
     if (!this.graph.has(value)) {
       console.log(value, "does not exist in graph");
       return;
@@ -43,48 +43,41 @@ class Graph {
 
   traversal(value) {
     if (!this.graph.has(value)) return;
-    let connection = [];
-    let visited = new Set(value);
-    this.graph.get(value).forEach((val) => connection.push(val));
-    this.bft(connection, this.graph, visited);
-    console.log("bft:", visited);
-    visited = new Set(value);
-    this.dft(connection, this.graph, visited);
-    console.log("dft:", visited);
+
+    let bftVisited = new Set(value);
+    this.bft(value, this.graph, bftVisited);
+
+    let dftVisited = new Set(value);
+    this.dft(value, this.graph, dftVisited);
+
+    console.log("bft:", bftVisited);
+    console.log("dft:", dftVisited);
   }
 
-  bft(connection, graph, visited) {
-    if (!connection.length) return;
-    connection.forEach((val) => visited.add(val));
-    for (let value of connection) {
-      let vertex = [];
-      graph
-        .get(value)
-        .forEach((val) => (!visited.has(val) ? vertex.push(val) : vertex));
-      this.bft(vertex, graph, visited);
-    }
+  bft(root, graph, visited) {
+    if (!graph.get(root).size) return;
+    graph.get(root).forEach((value) => visited.add(value));
+
+    graph.get(root).forEach((value) => {
+      this.bft(value, graph, visited);
+    });
   }
 
-  dft(connection, graph, visited) {
-    if (!connection.length) return;
-    for (let value of connection) {
-      visited.add(value);
-      let vertex = [];
-      graph
-        .get(value)
-        .forEach((val) => (!visited.has(val) ? vertex.push(val) : vertex));
-      this.bft(vertex, graph, visited);
-    }
+  dft(root, graph, visited) {
+    visited.add(root);
+    graph.get(root).forEach((value) => {
+      if (!visited.has(value)) this.dft(value, graph, visited);
+    });
   }
 }
 
 let graph = new Graph();
 
-graph.insert("A");
-graph.insert("B");
-graph.insert("C");
-graph.insert("D");
-graph.insert("E");
+graph.addNode("A");
+graph.addNode("B");
+graph.addNode("C");
+graph.addNode("D");
+graph.addNode("E");
 
 graph.addEdges("A", "B");
 graph.addEdges("A", "E");
@@ -94,4 +87,3 @@ graph.addEdges("C", "B");
 graph.addEdges("C", "D");
 graph.addEdges("D", "E");
 graph.traversal("C");
-// graph.print();
