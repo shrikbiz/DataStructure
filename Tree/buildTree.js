@@ -147,6 +147,7 @@ class Tree {
     );
   }
 
+  //this is not how it is done //re do please
   // T: O(Number of Node) S:O(max depth of the tree)
   isBST(current = this.root, leftRange = -Infinity, rightRange = Infinity) {
     if (!current) return true; //base condition
@@ -168,10 +169,14 @@ tree.insert(6);
 tree.insert(1);
 tree.insert(9);
 tree.insert(8);
+tree.insert(0);
+tree.insert(2);
+tree.insert(3);
+tree.insert(10);
 tree.insert(10);
 console.log("bfs:", tree.bfs());
 // tree.disript();
-// tree.print();
+tree.print();
 
 // let value = 121;
 // console.log(
