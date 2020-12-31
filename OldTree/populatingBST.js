@@ -108,20 +108,38 @@ class BST {
   }
 
   check() {
-    console.log(this.root);
+    console.log("result:", this.branchSum(this.root, [], 0));
+  }
+
+  branchSum(root, branchSum, total) {
+    if (!root) return branchSum;
+    total += root.value;
+    if (!root.left && !root.right) {
+      branchSum.push(total);
+      return branchSum;
+    }
+    this.branchSums(root.left, branchSum, total);
+    this.branchSums(root.right, branchSum, total);
+    return branchSum;
+  }
+
+  print() {
+    console.log("root:", this.root);
   }
 }
 
 //testing
 
-arr = [10, 5, 15, 6, 1, 8, 12, 18, 17];
+arr = [1];
+// arr = [10, 5, 15, 6, 1, 8, 12, 18, 17];
 let bst = new BST();
 
 let runBst = (array) => {
   for (let value of array) {
     bst.insert(value);
   }
-  return bst.check();
+  // bst.check();
+  bst.print();
 };
 
 runBst(arr);

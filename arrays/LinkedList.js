@@ -129,6 +129,19 @@ class LinkedList {
     } else this.head = this.tail = null;
   }
 
+  reverse() {
+    let current = this.head;
+    let prev = null;
+    while (current !== null) {
+      let temp = current.next;
+      current.next = prev;
+      prev = current;
+      current = temp;
+    }
+    console.log("🚀 -> LinkedList -> reverse -> prev", prev);
+    this.head = prev;
+  }
+
   contains(value) {
     let list = this.head;
     let ans = false;
@@ -167,7 +180,7 @@ class LinkedList {
       listAsArray.push(list.value);
       list = list.next;
     }
-    console.log("list now is", listAsArray, this.head, this.tail);
+    console.log("list now is", listAsArray);
   }
 }
 
@@ -191,8 +204,9 @@ list.addLast(5);
 // list.deleteLast();
 // list.deleteFirst();
 // list.deleteLast();
-list.deleteLast();
-list.contains(5);
-list.indexOfNode(5);
+// list.deleteLast();
+// list.contains(5);
+// list.indexOfNode(5);
 
+list.reverse();
 list.viewList();

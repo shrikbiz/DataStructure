@@ -112,10 +112,9 @@ class BST {
   traversePreOrder(parent, arr) {
     if (!parent) return;
     arr.push(parent.value);
-    console.log("start ->", " parent:::", parent.value);
     this.traversePreOrder(parent.left, arr);
-
     this.traversePreOrder(parent.right, arr);
+    console.log("start ->", " parent:::", parent.value);
   }
 
   inOrder() {
@@ -148,6 +147,7 @@ class BST {
 //filling tree
 
 arr = [10, 5, 15, 6, 1, 8, 12, 18, 17];
+// let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let bst = new BST();
 
 let runBst = (array) => {
