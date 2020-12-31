@@ -84,6 +84,18 @@ class Tree {
   }
 
   //--------------end of DFS trevarse methods---------//
+  //--------------BFS trevarse method---------//
+
+  bfs(current = this.root, order = [this.root.value]) {
+    if (!current) return;
+    if (current.left) order.push(current.left.value);
+    if (current.right) order.push(current.right.value);
+    this.bfs(current.left, order);
+    this.bfs(current.right, order);
+    return order;
+  }
+
+  //--------------end of BFS trevarse method---------//
 
   height(current = this.root) {
     if (!current) return -1;
@@ -157,6 +169,7 @@ tree.insert(1);
 tree.insert(9);
 tree.insert(8);
 tree.insert(10);
+console.log("bfs:", tree.bfs());
 // tree.disript();
 // tree.print();
 
