@@ -1,42 +1,90 @@
-class Node {
+class Tree {
   constructor(value) {
     this.value = value;
     this.left = null;
     this.right = null;
   }
-}
-
-class Tree {
-  constructor(value) {
-    this.root = new Node(value);
-  }
 
   insert(value) {
-    if (!this.root || !this.root.value) this.root = new Node(value);
-    else {
-      let current = this.root;
-      while (true) {
-        if (current.value >= value) {
-          if (!current.left) {
-            current.left = new Node(value);
-            break;
-          }
-          current = current.left;
-        } else {
-          if (!current.right) {
-            current.right = new Node(value);
-            break;
-          }
-          current = current.right;
+    if (!this.value) {
+      this.value = value;
+      return;
+    }
+    let current = this;
+    while (true) {
+      if (current.value >= value) {
+        if (!current.left) {
+          current.left = new Tree(value);
+          break;
         }
+        current = current.left;
+      } else {
+        if (!current.right) {
+          current.right = new Tree(value);
+          break;
+        }
+        current = current.right;
       }
     }
   }
 
   print() {
-    console.log("Tree:", this.root);
+    console.log("Tree:", this);
+  }
+  //lca(n1,n2)
+  lca(left, right) {
+    let leftPath = [];
+    let rightPath = [];
+    this.findPath(this, left, leftPath);
+    this.findPath(this, right, rightPath);
+    let index = 0;
+    let previous;
+    while (index < leftPath.length && index < rightPath.length) {
+      if (leftPath[index] !== rightPath[index]) break;
+      previous = leftPath[index];
+      index++;
+    }
+    console.log("🚀 -> Tree -> lca -> previous", previous);
+    return previous;
   }
 
+  findPath(current, value, path) {
+    if (!current) return;
+    if (path[path.length - 1] !== value) path.push(current.value);
+    this.findPath(current.left, value, path);
+    this.findPath(current.right, value, path);
+    if (path[path.length - 1] !== value) path.pop(current.value);
+  }
+}
+
+let tree = new Tree(7);
+
+tree.insert(4);
+tree.insert(6);
+tree.insert(1);
+tree.insert(9);
+tree.insert(8);
+tree.insert(0);
+tree.insert(2);
+tree.insert(3);
+tree.insert(10);
+tree.insert(10);
+tree.lca(3, 8);
+tree.print();
+
+//               7
+//             /    \
+//            4      9
+//           / \    / \
+//          1   6  8   10
+//         / \          \
+//        0   2         10
+//           / \
+//              3
+//
+/**         
+ * 
+ * 
   //solution 1
   // find(value) {
   //   let current = this.root;
@@ -50,7 +98,7 @@ class Tree {
   // }
 
   //solution 2
-  find(value) {
+find(value) {
     let current = this.root;
     while (current) {
       if (current.value > value) current = current.left;
@@ -124,18 +172,10 @@ class Tree {
     return Math.max(left, right);
   }
 
-  disript() {
+  disrupt() {
     this.root.left.right = new Node(100);
     this.root.right.right.left = new Node(15);
   }
-
-  // nodeDepth() {
-  //   let root = this.root;
-  //   let sum = 0;
-  //   let level = 0;
-  //   sum = this.nodeDepthHelper(root, sum, level);
-  //   return sum;
-  // }
 
   nodeDepths(root = this.root, level = 0) {
     if (!root) return 0;
@@ -159,33 +199,6 @@ class Tree {
       );
     }
     return false;
-  }
-}
-
-let tree = new Tree();
-tree.insert(7);
-tree.insert(4);
-tree.insert(6);
-tree.insert(1);
-tree.insert(9);
-tree.insert(8);
-tree.insert(0);
-tree.insert(2);
-tree.insert(3);
-tree.insert(10);
-tree.insert(10);
-// console.log("bfs:", tree.bfs());
-// tree.disript();
-tree.print();
-
-// let value = 121;
-// console.log(
-//   tree.find(value) ? `${value} is available` : `${value} is not available`
-// );
-// console.log("DFS: in-order:", tree.inOrder());
-// console.log("DFS: post-order:", tree.postOrder());
-// console.log("maxHeight:", tree.height());
-// console.log("min Value:", tree.minValue());
-// console.log("max Value:", tree.maxValue());
-// console.log("nodedepth", tree.nodeDepths());
-// console.log("isBST:", tree.isBST());
+  } 
+* 
+ */

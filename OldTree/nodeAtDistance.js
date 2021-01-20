@@ -102,3 +102,10 @@ let runBst = (array) => {
 runBst(arr);
 
 console.log(bst.distance(3));
+
+
+function binaryTreeDiameter(bst){
+
+}
+
+function helper(current, height, maxDiameter)
