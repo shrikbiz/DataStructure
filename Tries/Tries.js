@@ -120,5 +120,6 @@ tries.insert("shrikant");
 tries.insert("shri");
 tries.insert("shrik");
 tries.checkStr("shrikant");
+console.log(tries);
 let value = undefined;
-console.log(`auto suggest for ${value} is:`, tries.autoSuggest(value));
+// console.log(`auto suggest for ${value} is:`, tries.autoSuggest(value));

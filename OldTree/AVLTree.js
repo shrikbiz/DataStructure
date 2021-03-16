@@ -1,6 +1,14 @@
 //insert value using recursion.
 //this is inital practice for AVL Tress
 
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.height = 0;
+    this.left = null;
+    this.right = null;
+  }
+}
 class AVLTree {
   constructor() {
     this.root = null;
@@ -114,15 +122,6 @@ class AVLTree {
   display() {
     console.log("AVLTree -> display -> this.root", this.root);
     return this.root;
-  }
-}
-
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.height = 0;
-    this.left = null;
-    this.right = null;
   }
 }
 
