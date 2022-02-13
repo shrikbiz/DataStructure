@@ -1,1 +1,1 @@
-console.log("Practicing for Meta interview")
+console.log('practive for Meta interview');

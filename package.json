@@ -1,0 +1,19 @@
+{
+  "name": "datastructure",
+  "version": "1.0.0",
+  "description": "data structure and algorithm",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shrikbiz/DataStructure.git"
+  },
+  "author": "Shrikant Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shrikbiz/DataStructure/issues"
+  },
+  "homepage": "https://github.com/shrikbiz/DataStructure#readme"
+}
