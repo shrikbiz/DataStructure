@@ -95,7 +95,7 @@ class LinkedList {
     } else {
       let oldHead = this.head;
       this.head = new Node(value);
-      this.head.next = oldHead;
+      this.r.next = oldHead;
     }
   }
 
@@ -193,20 +193,52 @@ class Node {
 
 let list = new LinkedList();
 
-list.addFirst(1);
+list.addFirst(0);
+// list.addFirst(1);
 
-list.addFirst(2);
-list.addFirst(3);
-list.addFirst(4);
+// list.addFirst(2);
+// list.addFirst(3);
+// list.addFirst(4);
+list.addLast(1);
+list.addLast(2);
+list.addLast(3);
+list.addLast(4);
 list.addLast(5);
-// list.deleteFirst();
-// list.deleteLast();
-// list.deleteLast();
-// list.deleteFirst();
-// list.deleteLast();
-// list.deleteLast();
-// list.contains(5);
-// list.indexOfNode(5);
+list.addLast(6);
+list.addLast(7);
+list.addLast(8);
+list.addLast(9);
+// list.addLast(7);
 
-list.reverse();
+// list.reverse();
 list.viewList();
+function removeKthNodeFromEnd(head, k) {
+  let current = head;
+  let previous;
+  let currentLength = 1;
+  while (true) {
+    if (!current.next) {
+      if (currentLength === k) {
+        head = head.next;
+        console.log("removeKthNodeFromEnd -> head", head);
+      } else {
+        previous.next = previous.next.next;
+      }
+      break;
+    }
+    if (previous) previous = previous.next;
+    if (currentLength === k) {
+      previous = head;
+    }
+    currentLength++;
+    current = current.next;
+  }
+  let curr = head;
+  while (curr) {
+    console.log(curr.value);
+    curr = curr.next;
+  }
+  return head;
+}
+
+console.log(removeKthNodeFromEnd(list.head, 10));

@@ -1,128 +1,129 @@
 //insert value using recursion.
 //this is inital practice for AVL Tress
 
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.height = 0;
-    this.left = null;
-    this.right = null;
-  }
+class AVLNode {
+    constructor(value) {
+        this.value = value;
+        this.height = 0;
+        this.left = null;
+        this.right = null;
+    }
 }
+
 class AVLTree {
-  constructor() {
-    this.root = null;
-  }
-
-  insert(value) {
-    this.root = this.insertValue(this.root, value);
-  }
-
-  insertValue(parent, value) {
-    if (!parent) {
-      return new Node(value);
+    constructor() {
+        this.root = null;
     }
 
-    if (parent.value > value) {
-      parent.left = this.insertValue(parent.left, value);
-    } else {
-      parent.right = this.insertValue(parent.right, value);
+    insert(value) {
+        this.root = this.insertValue(this.root, value);
     }
 
-    this.setHeight(parent);
+    insertValue(parent, value) {
+        if (!parent) {
+            return new AVLNode(value);
+        }
 
-    return this.treeBalancer(parent);
-  }
+        if (parent.value > value) {
+            parent.left = this.insertValue(parent.left, value);
+        } else {
+            parent.right = this.insertValue(parent.right, value);
+        }
 
-  setHeight(parent) {
-    parent.height =
-      1 + Math.max(this.isChild(parent.left), this.isChild(parent.right));
-  }
+        this.setHeight(parent);
 
-  treeBalancer(parent) {
-    if (this.isLeftHeavy(parent)) {
-      parent = this.rotateRight(parent);
-      parent = this.heightBalancer(parent);
-    } else if (this.isRightHeavy(parent)) {
-      parent = this.rotateLeft(parent);
-      parent = this.heightBalancer(parent);
+        return this.treeBalancer(parent);
     }
-    return parent;
-  }
 
-  rotateRight(parent) {
-    if (this.balanceFactor(parent.left) < 0) {
-      parent.left = this.rotateLeft(parent.left);
-      // parent = this.leftRightRotate(parent);
-      //^ -> alternate rotation function that gives different but right answer
+    setHeight(parent) {
+        parent.height =
+            1 + Math.max(this.isChild(parent.left), this.isChild(parent.right));
     }
-    let newRoot = parent.left;
-    parent.left = newRoot.right;
-    newRoot.right = parent;
-    // this.setHeight(parent);  //comment this.heightBalancer
-    // this.setHeight(newRoot); // setHeight is another method to do set height
-    // setHeight have a bug. one of the leaf's height gets 1 //here it's 21
-    return newRoot;
-  }
-  rotateLeft(parent) {
-    if (this.balanceFactor(parent.right) > 0) {
-      parent.right = this.rotateRight(parent.right);
-      // parent = this.rightLeftRotate(parent);
-      //^ -> alternate rotation function that gives different but right answer
+
+    treeBalancer(parent) {
+        if (this.isLeftHeavy(parent)) {
+            parent = this.rotateRight(parent);
+            parent = this.heightBalancer(parent);
+        } else if (this.isRightHeavy(parent)) {
+            parent = this.rotateLeft(parent);
+            parent = this.heightBalancer(parent);
+        }
+        return parent;
     }
-    let newRoot = parent.right;
-    parent.right = newRoot.left;
-    newRoot.left = parent;
-    // this.setHeight(parent);
-    // this.setHeight(newRoot);
-    return newRoot;
-  }
-  rightLeftRotate(parent) {
-    let temp = parent.right;
-    parent.right = temp.left;
-    temp.left = null;
-    parent.right.right = temp;
-    return parent;
-  }
-  leftRightRotate(parent) {
-    let temp = parent.left;
-    parent.left = temp.right;
-    temp.right = null;
-    parent.left.left = temp;
-    return parent;
-  }
 
-  heightBalancer(parent) {
-    if (!parent) return -1;
+    rotateRight(parent) {
+        if (this.balanceFactor(parent.left) < 0) {
+            parent.left = this.rotateLeft(parent.left);
+            // parent = this.leftRightRotate(parent);
+            //^ -> alternate rotation function that gives different but right answer
+        }
+        let newRoot = parent.left;
+        parent.left = newRoot.right;
+        newRoot.right = parent;
+        // this.setHeight(parent);  //comment this.heightBalancer
+        // this.setHeight(newRoot); // setHeight is another method to do set height
+        // setHeight have a bug. one of the leaf's height gets 1 //here it's 21
+        return newRoot;
+    }
+    rotateLeft(parent) {
+        if (this.balanceFactor(parent.right) > 0) {
+            parent.right = this.rotateRight(parent.right);
+            // parent = this.rightLeftRotate(parent);
+            //^ -> alternate rotation function that gives different but right answer
+        }
+        let newRoot = parent.right;
+        parent.right = newRoot.left;
+        newRoot.left = parent;
+        // this.setHeight(parent);
+        // this.setHeight(newRoot);
+        return newRoot;
+    }
+    rightLeftRotate(parent) {
+        let temp = parent.right;
+        parent.right = temp.left;
+        temp.left = null;
+        parent.right.right = temp;
+        return parent;
+    }
+    leftRightRotate(parent) {
+        let temp = parent.left;
+        parent.left = temp.right;
+        temp.right = null;
+        parent.left.left = temp;
+        return parent;
+    }
 
-    this.heightBalancer(parent.left);
-    this.heightBalancer(parent.right);
+    heightBalancer(parent) {
+        if (!parent) return -1;
 
-    parent.height =
-      1 + Math.max(this.isChild(parent.left), this.isChild(parent.right));
-    return parent;
-  }
+        this.heightBalancer(parent.left);
+        this.heightBalancer(parent.right);
 
-  isLeftHeavy(node) {
-    return this.balanceFactor(node) > 1;
-  }
+        parent.height =
+            1 + Math.max(this.isChild(parent.left), this.isChild(parent.right));
+        return parent;
+    }
 
-  isRightHeavy(node) {
-    return this.balanceFactor(node) < -1;
-  }
+    isLeftHeavy(node) {
+        return this.balanceFactor(node) > 1;
+    }
 
-  balanceFactor(node) {
-    return this.isChild(node.left) - this.isChild(node.right);
-  }
+    isRightHeavy(node) {
+        return this.balanceFactor(node) < -1;
+    }
 
-  isChild(node) {
-    return !node ? -1 : node.height;
-  }
+    balanceFactor(node) {
+        return this.isChild(node.left) - this.isChild(node.right);
+    }
 
-  display() {
-    console.log("AVLTree -> display -> this.root", this.root);
-    return this.root;
-  }
+    isChild(node) {
+        return !node ? -1 : node.height;
+    }
+
+    display() {
+        console.log("AVLTree -> display -> this.root", this.root);
+        return this.root;
+    }
 }
 
 let avl = new AVLTree();
